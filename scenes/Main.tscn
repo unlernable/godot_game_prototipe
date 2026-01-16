@@ -1,0 +1,771 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8x7y6v5u4t3"]
+
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/Renderer.gd" id="2_renderer"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sidebar" type="Panel" parent="CanvasLayer/HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/HBoxContainer/Sidebar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="Generate" type="Button" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Generate"
+
+[node name="Exit" type="Button" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exit"
+
+[node name="Display" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Display"]
+layout_mode = 2
+text = "Display"
+horizontal_alignment = 1
+
+[node name="Resolution" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Display"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Display/Resolution"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Resolution"
+
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Display/Resolution"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Fullscreen" type="CheckBox" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Display"]
+layout_mode = 2
+text = "Fullscreen"
+
+[node name="FPS" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Display"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Display/FPS"]
+layout_mode = 2
+text = "FPS Limit"
+
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Display/FPS"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Renderer" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Renderer"]
+layout_mode = 2
+text = "Renderer"
+horizontal_alignment = 1
+
+[node name="GridCheck" type="CheckBox" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Renderer"]
+layout_mode = 2
+text = "Grid"
+
+[node name="SpawnCheck" type="CheckBox" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Renderer"]
+layout_mode = 2
+text = "Spawn Regions"
+
+[node name="StrategiesCheck" type="CheckBox" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Renderer"]
+layout_mode = 2
+text = "Strategies"
+
+[node name="PathCheck" type="CheckBox" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Renderer"]
+layout_mode = 2
+button_pressed = true
+text = "Path"
+
+[node name="Room" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room"]
+layout_mode = 2
+text = "Room Parameters"
+horizontal_alignment = 1
+
+[node name="RandomRoom" type="CheckBox" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room"]
+layout_mode = 2
+text = "Randomize Directions"
+
+[node name="Width" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/Width"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Width"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/Width"]
+layout_mode = 2
+text = "900"
+
+[node name="Height" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/Height"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Height"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/Height"]
+layout_mode = 2
+text = "600"
+
+[node name="EnterDir" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/EnterDir"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Enter Dir"
+
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/EnterDir"]
+layout_mode = 2
+
+[node name="EnterPos" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/EnterPos"]
+layout_mode = 2
+text = "Enter Pos"
+
+[node name="HSlider" type="HSlider" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/EnterPos"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Exit" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room"]
+layout_mode = 2
+
+[node name="Dir" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/Exit"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/Exit/Dir"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Exit Dir"
+
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/Exit/Dir"]
+layout_mode = 2
+
+[node name="Start" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/Exit"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/Exit/Start"]
+layout_mode = 2
+text = "Exit Start"
+
+[node name="HSlider" type="HSlider" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/Exit/Start"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="Size" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/Exit"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/Exit/Size"]
+layout_mode = 2
+text = "Exit Size"
+
+[node name="HSlider" type="HSlider" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Room/Exit/Size"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.2
+
+[node name="Generator" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator"]
+layout_mode = 2
+text = "Generator Parameters"
+horizontal_alignment = 1
+
+[node name="GridStep" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator/GridStep"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Grid Step"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator/GridStep"]
+layout_mode = 2
+text = "16"
+
+[node name="CutRate" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator/CutRate"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cut Rate"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator/CutRate"]
+layout_mode = 2
+text = "50.0"
+
+[node name="SplitRate" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator/SplitRate"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Split Rate"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator/SplitRate"]
+layout_mode = 2
+text = "0.1"
+
+[node name="MinSquare" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator/MinSquare"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Min Square"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator/MinSquare"]
+layout_mode = 2
+text = "4"
+
+[node name="Seed" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator/Seed"]
+layout_mode = 2
+text = "Seed (empty = random)"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator/Seed"]
+layout_mode = 2
+placeholder_text = "Leave empty for random"
+
+[node name="CurrentSeed" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generator/Seed"]
+layout_mode = 2
+text = "Current: -"
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+
+[node name="Strategies" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Strategies"]
+layout_mode = 2
+text = "Strategies"
+horizontal_alignment = 1
+
+[node name="Pyramid" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Strategies"]
+layout_mode = 2
+
+[node name="CheckBox" type="CheckBox" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Strategies/Pyramid"]
+layout_mode = 2
+button_pressed = true
+text = "Pyramid"
+
+[node name="Grid" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Strategies"]
+layout_mode = 2
+
+[node name="CheckBox" type="CheckBox" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Strategies/Grid"]
+layout_mode = 2
+button_pressed = true
+text = "Grid"
+
+[node name="JumpPad" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Strategies"]
+layout_mode = 2
+
+[node name="CheckBox" type="CheckBox" parent="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Strategies/JumpPad"]
+layout_mode = 2
+text = "Jump Pad"
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/HBoxContainer/ViewportContainer"]
+handle_input_locally = false
+size = Vector2i(976, 720)
+render_target_update_mode = 4
+
+[node name="Renderer" type="Control" parent="CanvasLayer/HBoxContainer/ViewportContainer/SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_renderer")
+
+[node name="CameraSettingsPanel" type="PanelContainer" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CameraSettingsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Camera Settings (P)"
+horizontal_alignment = 1
+
+[node name="ModeContainer" type="HBoxContainer" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer/ModeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Mode"
+
+[node name="ModeButton" type="OptionButton" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer/ModeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ZoomContainer" type="VBoxContainer" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer/ZoomContainer"]
+layout_mode = 2
+text = "Zoom: 1.5x"
+
+[node name="ZoomSlider" type="HSlider" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer/ZoomContainer"]
+layout_mode = 2
+min_value = 0.5
+max_value = 3.0
+step = 0.1
+value = 1.5
+
+[node name="SmoothnessContainer" type="VBoxContainer" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer/SmoothnessContainer"]
+layout_mode = 2
+text = "Smoothness: 10%"
+
+[node name="SmoothnessSlider" type="HSlider" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer/SmoothnessContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 100.0
+step = 1.0
+value = 10.0
+
+[node name="DeadZoneContainer" type="VBoxContainer" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer/DeadZoneContainer"]
+layout_mode = 2
+text = "Dead Zone: 10%"
+
+[node name="DeadZoneSlider" type="HSlider" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer/DeadZoneContainer"]
+layout_mode = 2
+min_value = 0.0
+max_value = 50.0
+step = 1.0
+value = 10.0
+
+[node name="ParallaxContainer" type="VBoxContainer" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer/ParallaxContainer"]
+layout_mode = 2
+text = "Grid Parallax: 0%"
+
+[node name="ParallaxSlider" type="HSlider" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer/ParallaxContainer"]
+layout_mode = 2
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+value = 0.0
+
+[node name="CloseButton" type="Button" parent="CanvasLayer/CameraSettingsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Close (P)"
+
+[node name="PlayerSettingsPanel" type="PanelContainer" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -180.0
+offset_right = 200.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlayerSettingsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Player Physics (O)"
+horizontal_alignment = 1
+
+[node name="Profiles" type="HBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ProfileSelector" type="OptionButton" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/Profiles"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Select a saved profile"
+
+[node name="NewProfileName" type="LineEdit" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/Profiles"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Profile Name"
+
+[node name="SaveProfileButton" type="Button" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/Profiles"]
+layout_mode = 2
+text = "Save"
+tooltip_text = "Save current settings as a new profile or overwrite existing"
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="JumpHeight" type="VBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Максимальная высота прыжка. Чем выше значение, тем выше персонаж может прыгнуть."
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpHeight"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpHeight/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Jump Height"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpHeight/HBox"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "1.0"
+
+[node name="Slider" type="HSlider" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpHeight"]
+layout_mode = 2
+min_value = 0.1
+max_value = 3.0
+step = 0.1
+value = 1.0
+
+[node name="JumpSpeed" type="VBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Скорость набора высоты при прыжке. Чем выше значение, тем быстрее персонаж поднимается."
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpSpeed"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpSpeed/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Jump Speed"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpSpeed/HBox"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "1.0"
+
+[node name="Slider" type="HSlider" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpSpeed"]
+layout_mode = 2
+min_value = 0.1
+max_value = 3.0
+step = 0.1
+value = 1.0
+
+[node name="FallSpeed" type="VBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Скорость падения. Чем выше значение, тем быстрее персонаж падает вниз."
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/FallSpeed"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/FallSpeed/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Fall Speed"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/FallSpeed/HBox"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "1.0"
+
+[node name="Slider" type="HSlider" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/FallSpeed"]
+layout_mode = 2
+min_value = 0.1
+max_value = 3.0
+step = 0.1
+value = 1.0
+
+[node name="GravityTime" type="VBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Время (сек) для набора максимальной скорости падения. 0 = мгновенно."
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GravityTime"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GravityTime/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Gravity Time"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GravityTime/HBox"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "0.1"
+
+[node name="Slider" type="HSlider" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GravityTime"]
+layout_mode = 2
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="RunSpeed" type="VBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Скорость горизонтального движения. Чем выше значение, тем быстрее персонаж бегает."
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/RunSpeed"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/RunSpeed/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Run Speed"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/RunSpeed/HBox"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "1.0"
+
+[node name="Slider" type="HSlider" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/RunSpeed"]
+layout_mode = 2
+min_value = 0.1
+max_value = 3.0
+step = 0.1
+value = 1.0
+
+[node name="JumpSmoothing" type="VBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Плавность прыжка (инерция). Чем выше значение, тем более 'воздушным' и плавным ощущается прыжок."
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpSmoothing"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpSmoothing/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Jump Smoothing"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpSmoothing/HBox"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "0.25"
+
+[node name="Slider" type="HSlider" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpSmoothing"]
+layout_mode = 2
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.25
+
+[node name="GroundStop" type="VBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Инерция остановки на земле. Время (сек) до полной остановки."
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GroundStop"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GroundStop/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ground Stop"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GroundStop/HBox"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "0.1"
+
+[node name="Slider" type="HSlider" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GroundStop"]
+layout_mode = 2
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="GroundTurn" type="VBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Инерция разворота на земле. Время (сек) для смены направления."
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GroundTurn"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GroundTurn/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ground Turn"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GroundTurn/HBox"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "0.1"
+
+[node name="Slider" type="HSlider" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GroundTurn"]
+layout_mode = 2
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="AirStop" type="VBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Инерция остановки в воздухе. Время (сек) до остановки горизонтального движения."
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/AirStop"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/AirStop/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Air Stop"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/AirStop/HBox"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "0.1"
+
+[node name="Slider" type="HSlider" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/AirStop"]
+layout_mode = 2
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="AirTurn" type="VBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Инерция разворота в воздухе. Время (сек) для смены направления."
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/AirTurn"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/AirTurn/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Air Turn"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/AirTurn/HBox"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "0.1"
+
+[node name="Slider" type="HSlider" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/AirTurn"]
+layout_mode = 2
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="CeilingCrash" type="VBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Скорость восстановления после удара головой. Чем меньше, тем быстрее продолжится падение."
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/CeilingCrash"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/CeilingCrash/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Head Bonk"
+
+[node name="Value" type="LineEdit" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/CeilingCrash/HBox"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "0.1"
+
+[node name="Slider" type="HSlider" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer/CeilingCrash"]
+layout_mode = 2
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="CloseButton" type="Button" parent="CanvasLayer/PlayerSettingsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Close (O)"
+
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Generate" to="." method="_on_generate_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="toggled" from="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Renderer/GridCheck" to="." method="_on_grid_check_toggled"]
+[connection signal="toggled" from="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Renderer/SpawnCheck" to="." method="_on_spawn_check_toggled"]
+[connection signal="toggled" from="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Renderer/StrategiesCheck" to="." method="_on_strategies_check_toggled"]
+[connection signal="toggled" from="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Renderer/PathCheck" to="." method="_on_path_check_toggled"]
+[connection signal="item_selected" from="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Display/Resolution/OptionButton" to="." method="_on_resolution_changed"]
+[connection signal="toggled" from="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Display/Fullscreen" to="." method="_on_fullscreen_toggled"]
+[connection signal="item_selected" from="CanvasLayer/HBoxContainer/Sidebar/ScrollContainer/VBoxContainer/Display/FPS/OptionButton" to="." method="_on_fps_selected"]
+[connection signal="item_selected" from="CanvasLayer/CameraSettingsPanel/VBoxContainer/ModeContainer/ModeButton" to="." method="_on_camera_mode_changed"]
+[connection signal="value_changed" from="CanvasLayer/CameraSettingsPanel/VBoxContainer/ZoomContainer/ZoomSlider" to="." method="_on_camera_zoom_changed"]
+[connection signal="value_changed" from="CanvasLayer/CameraSettingsPanel/VBoxContainer/SmoothnessContainer/SmoothnessSlider" to="." method="_on_camera_smoothness_changed"]
+[connection signal="value_changed" from="CanvasLayer/CameraSettingsPanel/VBoxContainer/DeadZoneContainer/DeadZoneSlider" to="." method="_on_camera_dead_zone_changed"]
+[connection signal="value_changed" from="CanvasLayer/CameraSettingsPanel/VBoxContainer/ParallaxContainer/ParallaxSlider" to="." method="_on_camera_parallax_changed"]
+[connection signal="pressed" from="CanvasLayer/CameraSettingsPanel/VBoxContainer/CloseButton" to="." method="_on_camera_panel_close"]
+[connection signal="item_selected" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/Profiles/ProfileSelector" to="." method="_on_profile_selected"]
+[connection signal="pressed" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/Profiles/SaveProfileButton" to="." method="_on_save_profile_pressed"]
+[connection signal="value_changed" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpHeight/Slider" to="." method="_on_player_jump_height_changed"]
+[connection signal="text_submitted" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpHeight/HBox/Value" to="." method="_on_player_jump_height_text"]
+[connection signal="value_changed" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpSpeed/Slider" to="." method="_on_player_jump_speed_changed"]
+[connection signal="text_submitted" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpSpeed/HBox/Value" to="." method="_on_player_jump_speed_text"]
+[connection signal="value_changed" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/FallSpeed/Slider" to="." method="_on_player_fall_speed_changed"]
+[connection signal="text_submitted" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/FallSpeed/HBox/Value" to="." method="_on_player_fall_speed_text"]
+[connection signal="value_changed" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GravityTime/Slider" to="." method="_on_player_gravity_time_changed"]
+[connection signal="text_submitted" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GravityTime/HBox/Value" to="." method="_on_player_gravity_time_text"]
+[connection signal="value_changed" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/RunSpeed/Slider" to="." method="_on_player_run_speed_changed"]
+[connection signal="text_submitted" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/RunSpeed/HBox/Value" to="." method="_on_player_run_speed_text"]
+[connection signal="value_changed" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpSmoothing/Slider" to="." method="_on_player_jump_smoothing_changed"]
+[connection signal="text_submitted" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/JumpSmoothing/HBox/Value" to="." method="_on_player_jump_smoothing_text"]
+[connection signal="value_changed" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GroundStop/Slider" to="." method="_on_player_ground_stop_changed"]
+[connection signal="text_submitted" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GroundStop/HBox/Value" to="." method="_on_player_ground_stop_text"]
+[connection signal="value_changed" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GroundTurn/Slider" to="." method="_on_player_ground_turn_changed"]
+[connection signal="text_submitted" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/GroundTurn/HBox/Value" to="." method="_on_player_ground_turn_text"]
+[connection signal="value_changed" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/AirStop/Slider" to="." method="_on_player_air_stop_changed"]
+[connection signal="text_submitted" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/AirStop/HBox/Value" to="." method="_on_player_air_stop_text"]
+[connection signal="value_changed" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/AirTurn/Slider" to="." method="_on_player_air_turn_changed"]
+[connection signal="text_submitted" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/AirTurn/HBox/Value" to="." method="_on_player_air_turn_text"]
+[connection signal="value_changed" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/CeilingCrash/Slider" to="." method="_on_player_ceiling_crash_changed"]
+[connection signal="text_submitted" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/CeilingCrash/HBox/Value" to="." method="_on_player_ceiling_crash_text"]
+[connection signal="pressed" from="CanvasLayer/PlayerSettingsPanel/VBoxContainer/CloseButton" to="." method="_on_player_panel_close"]
