@@ -23,7 +23,7 @@ func _ready():
 	zoom = Vector2(zoom_level, zoom_level)
 
 
-func _process(delta):
+func _physics_process(delta):
 	if target == null or not enabled:
 		return
 	
@@ -57,6 +57,9 @@ func _process(delta):
 		return
 	
 	# Smooth follow with frame-rate independent interpolation
+	# Note: smoothness is 0.01 to 1.0.
+	# If smoothness is 1.0, we want instant snap?
+	# Using lerp_factor logic:
 	var lerp_factor = 1.0 - pow(1.0 - smoothness, delta * 60.0)
 	global_position += move * lerp_factor
 

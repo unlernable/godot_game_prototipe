@@ -23,12 +23,12 @@ func _ready():
 	
 	# Center it - Wider
 	set_anchors_preset(Control.PRESET_CENTER)
-	var w = 600
-	var h = 300
-	offset_left = -w / 2
-	offset_right = w / 2
-	offset_top = -h / 2
-	offset_bottom = h / 2
+	var w = 600.0
+	var h = 300.0
+	offset_left = -w / 2.0
+	offset_right = w / 2.0
+	offset_top = -h / 2.0
+	offset_bottom = h / 2.0
 	grow_horizontal = Control.GROW_DIRECTION_BOTH
 	grow_vertical = Control.GROW_DIRECTION_BOTH
 	

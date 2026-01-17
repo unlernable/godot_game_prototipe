@@ -72,7 +72,9 @@ func _ready():
 	_setup_sidebar_signals()
 	
 	_setup_resolution_options()
-	_setup_fps_options()
+	# FPS is now locked to 60
+	Engine.max_fps = 60
+	
 	_setup_camera_panel()
 	setup_ui_defaults()
 	_setup_enemy_panel()
@@ -266,6 +268,14 @@ func setup_ui_defaults():
 	renderer.set_spawn_enabled(false)
 	renderer.set_debug_enabled(false)
 	renderer.set_path_enabled(true)
+	
+	# STRICT 60 FPS LOCK (User Request)
+	# Disable VSync to prevent monitor rate interference
+	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+	# Lock rendering to 60 FPS
+	Engine.max_fps = 60
+	# Lock physics ticks to 60 (default, but explicit)
+	Engine.physics_ticks_per_second = 60
 
 
 func _setup_resolution_options():
@@ -719,12 +729,11 @@ func _load_settings():
 		renderer.set_debug_enabled(rend.strategies)
 		renderer.set_path_enabled(rend.path)
 		
-		# Apply Display settings logic (since update_ui just sets UI state)
+	# Apply Display settings logic (since update_ui just sets UI state)
 		var disp = _sidebar_panel.get_display_settings()
 		# Resolution change triggers center window logic which we might want
 		_on_resolution_changed(disp.resolution_index)
 		_on_fullscreen_toggled(disp.fullscreen)
-		_on_fps_selected(disp.fps_limit)
 	
 	# Camera settings
 	if data.has("camera") and _camera_settings_panel:

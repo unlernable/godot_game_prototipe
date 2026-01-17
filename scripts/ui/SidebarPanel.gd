@@ -52,9 +52,19 @@ var _fps_option: OptionButton
 func _init(sidebar_node: Control):
 	_sidebar = sidebar_node
 	_setup_references()
+	_reorganize_layout()
 	_populate_directions()
 	_connect_signals()
-	_reorganize_layout()
+# ... (rest of _init)
+
+
+# ...
+
+func get_display_settings() -> Dictionary:
+	return {
+		"resolution_index": _resolution_option.get_selected_id(),
+		"fullscreen": _fullscreen_check.button_pressed
+	}
 
 func _reorganize_layout():
 	var scroll = _sidebar.get_node_or_null("ScrollContainer")
@@ -222,6 +232,8 @@ func _setup_references():
 	_resolution_option = vbox.get_node("Display/Resolution/OptionButton")
 	_fullscreen_check = vbox.get_node("Display/Fullscreen")
 	_fps_option = vbox.get_node("Display/FPS/OptionButton")
+	# Hide FPS option since we locked it
+	_fps_option.get_parent().visible = false
 
 func _connect_signals():
 	# Display signals
@@ -275,13 +287,6 @@ func get_renderer_settings() -> Dictionary:
 		"path": _path_check.button_pressed
 	}
 
-func get_display_settings() -> Dictionary:
-	return {
-		"resolution_index": _resolution_option.get_selected_id(),
-		"fullscreen": _fullscreen_check.button_pressed,
-		"fps_limit": _fps_option.selected
-	}
-
 func set_seed_label(text: String):
 	_seed_label.text = text
 
@@ -295,12 +300,6 @@ func populate_resolutions(resolutions: Array[Vector2i], current_size: Vector2i):
 		if res == current_size:
 			selected_idx = i
 	_resolution_option.select(selected_idx)
-
-func populate_fps_options(options: Array):
-	_fps_option.clear()
-	for opt in options:
-		_fps_option.add_item(opt.label, opt.value)
-	_fps_option.select(0)
 
 func setup_defaults(defaults: Dictionary):
 	# Apply defaults to UI elements
@@ -348,7 +347,6 @@ func update_ui_from_dict(data: Dictionary):
 		var d = data["display"]
 		_resolution_option.select(d.get("resolution_index", _resolution_option.item_count - 1))
 		_fullscreen_check.button_pressed = d.get("fullscreen", false)
-		_fps_option.select(d.get("fps_limit", 0))
 
 # Defaults specific references (for setup_ui_defaults logic in Main)
 # It might be cleaner to move setup_ui_defaults logic INTO here entirely
