@@ -32,44 +32,93 @@ func _ready():
 	name = "EnemyPhysicsPanel"
 	visible = false
 	
-	# Center it
+	# Center it - larger size for 2-column layout
 	set_anchors_preset(Control.PRESET_CENTER)
-	offset_left = -200.0
-	offset_top = -180.0
-	offset_right = 200.0
-	offset_bottom = 180.0
+	var w = 900
+	var h = 450
+	offset_left = -w / 2
+	offset_right = w / 2
+	offset_top = -h / 2
+	offset_bottom = h / 2
+	
 	grow_horizontal = Control.GROW_DIRECTION_BOTH
 	grow_vertical = Control.GROW_DIRECTION_BOTH
 	
-	var vbox = VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 8)
-	add_child(vbox)
+	# MarginContainer
+	var margin = MarginContainer.new()
+	margin.set_anchors_preset(Control.PRESET_FULL_RECT)
+	margin.add_theme_constant_override("margin_left", 20)
+	margin.add_theme_constant_override("margin_right", 20)
+	margin.add_theme_constant_override("margin_top", 20)
+	margin.add_theme_constant_override("margin_bottom", 20)
+	add_child(margin)
+	
+	# Make opaque
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.15, 0.15, 0.15, 0.98)
+	add_theme_stylebox_override("panel", style)
+	
+	# Main HBox
+	var main_hbox = HBoxContainer.new()
+	main_hbox.add_theme_constant_override("separation", 30)
+	margin.add_child(main_hbox)
+	
+	# --- Left Column: Physics Sliders ---
+	var left_vbox = VBoxContainer.new()
+	left_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	main_hbox.add_child(left_vbox)
 	
 	var title = Label.new()
 	title.text = "Enemy Physics (U)"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(title)
+	title.add_theme_font_size_override("font_size", 18)
+	left_vbox.add_child(title)
+	left_vbox.add_child(HSeparator.new())
 	
-	setup_profiles_section(vbox)
+	# Grid settings
+	var grid = GridContainer.new()
+	grid.columns = 2
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	grid.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	grid.add_theme_constant_override("h_separation", 20)
+	grid.add_theme_constant_override("v_separation", 15)
+	left_vbox.add_child(grid)
 	
-	vbox.add_child(HSeparator.new())
+	create_row(grid, "Jump Height", 0.1, 3.0, 0.1, 1.0, "_jump_height_slider", "_jump_height_input")
+	create_row(grid, "Jump Speed", 0.1, 3.0, 0.1, 1.0, "_jump_speed_slider", "_jump_speed_input")
+	create_row(grid, "Fall Speed", 0.1, 3.0, 0.1, 1.0, "_fall_speed_slider", "_fall_speed_input")
+	create_row(grid, "Gravity Time", 0.0, 1.0, 0.01, 0.1, "_gravity_time_slider", "_gravity_time_input")
+	create_row(grid, "Run Speed", 0.1, 3.0, 0.1, 1.0, "_run_speed_slider", "_run_speed_input")
 	
-	create_row(vbox, "Jump Height", 0.1, 3.0, 0.1, 1.0, "_jump_height_slider", "_jump_height_input")
-	create_row(vbox, "Jump Speed", 0.1, 3.0, 0.1, 1.0, "_jump_speed_slider", "_jump_speed_input")
-	create_row(vbox, "Fall Speed", 0.1, 3.0, 0.1, 1.0, "_fall_speed_slider", "_fall_speed_input")
-	create_row(vbox, "Gravity Time", 0.0, 1.0, 0.01, 0.1, "_gravity_time_slider", "_gravity_time_input")
-	create_row(vbox, "Run Speed", 0.1, 3.0, 0.1, 1.0, "_run_speed_slider", "_run_speed_input")
+	create_row(grid, "Jump Softness", 0.01, 1.0, 0.01, 0.25, "_jump_smoothing_slider", "_jump_smoothing_input")
+	create_row(grid, "Ground Stop", 0.01, 1.0, 0.01, 0.1, "_ground_stop_slider", "_ground_stop_input")
+	create_row(grid, "Ground Turn", 0.01, 1.0, 0.01, 0.1, "_ground_turn_slider", "_ground_turn_input")
+	create_row(grid, "Air Stop", 0.01, 1.0, 0.01, 0.1, "_air_stop_slider", "_air_stop_input")
+	create_row(grid, "Air Turn", 0.01, 1.0, 0.01, 0.1, "_air_turn_slider", "_air_turn_input")
+
+	# --- Right Column: Profiles ---
+	var right_vbox = VBoxContainer.new()
+	right_vbox.custom_minimum_size.x = 280
+	main_hbox.add_child(right_vbox)
 	
-	create_row(vbox, "Jump Softness", 0.01, 1.0, 0.01, 0.25, "_jump_smoothing_slider", "_jump_smoothing_input")
-	create_row(vbox, "Ground Stop", 0.01, 1.0, 0.01, 0.1, "_ground_stop_slider", "_ground_stop_input")
-	create_row(vbox, "Ground Turn", 0.01, 1.0, 0.01, 0.1, "_ground_turn_slider", "_ground_turn_input")
-	create_row(vbox, "Air Stop", 0.01, 1.0, 0.01, 0.1, "_air_stop_slider", "_air_stop_input")
-	create_row(vbox, "Air Turn", 0.01, 1.0, 0.01, 0.1, "_air_turn_slider", "_air_turn_input")
+	var lbl_prof = Label.new()
+	lbl_prof.text = "Profiles"
+	lbl_prof.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl_prof.add_theme_font_size_override("font_size", 18)
+	right_vbox.add_child(lbl_prof)
+	right_vbox.add_child(HSeparator.new())
+	
+	setup_profiles_section(right_vbox)
+	
+	# Spacer
+	var spacer = Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	right_vbox.add_child(spacer)
 	
 	var btn_close = Button.new()
 	btn_close.text = "Close (U)"
 	btn_close.pressed.connect(func(): close_requested.emit())
-	vbox.add_child(btn_close)
+	right_vbox.add_child(btn_close)
 
 func setup_profiles_section(parent):
 	var profile_con = HBoxContainer.new()
@@ -94,6 +143,7 @@ func setup_profiles_section(parent):
 
 func create_row(parent, label_text, min_v, max_v, step_v, default_v, slider_var, input_var):
 	var container = VBoxContainer.new()
+	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	parent.add_child(container)
 	
 	# HBox for Label and Value Input

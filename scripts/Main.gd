@@ -253,6 +253,9 @@ func _setup_sidebar_signals():
 	_sidebar_panel.spawn_render_toggled.connect(_on_spawn_check_toggled)
 	_sidebar_panel.strategies_render_toggled.connect(_on_strategies_check_toggled)
 	_sidebar_panel.path_render_toggled.connect(_on_path_check_toggled)
+	
+	_sidebar_panel.generate_pressed.connect(generate)
+	_sidebar_panel.exit_pressed.connect(_on_exit_pressed)
 
 func setup_ui_defaults():
 	if _sidebar_panel:

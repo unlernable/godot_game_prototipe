@@ -9,6 +9,8 @@ signal grid_render_toggled(enabled: bool)
 signal spawn_render_toggled(enabled: bool)
 signal strategies_render_toggled(enabled: bool)
 signal path_render_toggled(enabled: bool)
+signal generate_pressed
+signal exit_pressed
 
 # References
 var _sidebar: Control
@@ -52,6 +54,128 @@ func _init(sidebar_node: Control):
 	_setup_references()
 	_populate_directions()
 	_connect_signals()
+	_reorganize_layout()
+
+func _reorganize_layout():
+	var scroll = _sidebar.get_node_or_null("ScrollContainer")
+	if not scroll: return
+	
+	var old_vbox = scroll.get_node_or_null("VBoxContainer")
+	if not old_vbox: return
+	
+	# Get Section Nodes
+	var room = old_vbox.get_node_or_null("Room")
+	var gen = old_vbox.get_node_or_null("Generator")
+	var strat = old_vbox.get_node_or_null("Strategies")
+	var rend = old_vbox.get_node_or_null("Renderer")
+	var disp = old_vbox.get_node_or_null("Display")
+	var btns = old_vbox.get_node_or_null("Buttons")
+	
+	if not (room and gen and strat and rend and disp):
+		return # Safety check
+	
+	# Detach from old parent
+	room.get_parent().remove_child(room)
+	gen.get_parent().remove_child(gen)
+	strat.get_parent().remove_child(strat)
+	rend.get_parent().remove_child(rend)
+	disp.get_parent().remove_child(disp)
+	if btns: btns.get_parent().remove_child(btns)
+	
+	# Hide old scroll
+	scroll.visible = false
+	
+	# Create Main VBox for Tabs + Bottom Buttons
+	var main_v = VBoxContainer.new()
+	main_v.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_sidebar.add_child(main_v)
+	
+	# Create Tabs
+	var tabs = TabContainer.new()
+	tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	main_v.add_child(tabs)
+	
+	# --- Tab 1: Level (Room, Generator, Strategies) ---
+	var t_level = VBoxContainer.new()
+	t_level.name = "Level"
+	tabs.add_child(t_level)
+	var m1 = MarginContainer.new()
+	m1.add_theme_constant_override("margin_left", 8)
+	m1.add_theme_constant_override("margin_right", 8)
+	m1.add_theme_constant_override("margin_top", 8)
+	m1.add_theme_constant_override("margin_bottom", 8)
+	m1.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	t_level.add_child(m1)
+	
+	var v1 = VBoxContainer.new()
+	m1.add_child(v1)
+	v1.add_child(room)
+	v1.add_child(HSeparator.new())
+	v1.add_child(gen)
+	v1.add_child(HSeparator.new())
+	v1.add_child(strat)
+	
+	# --- Tab 2: System (Display, Renderer) ---
+	var t_sys = VBoxContainer.new()
+	t_sys.name = "System"
+	tabs.add_child(t_sys)
+	var m3 = MarginContainer.new()
+	m3.add_theme_constant_override("margin_left", 8)
+	m3.add_theme_constant_override("margin_right", 8)
+	m3.add_theme_constant_override("margin_top", 8)
+	m3.add_theme_constant_override("margin_bottom", 8)
+	m3.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	t_sys.add_child(m3)
+	
+	var v3 = VBoxContainer.new()
+	m3.add_child(v3)
+	
+	# Display Section
+	var lbl_disp = Label.new()
+	lbl_disp.text = "Display"
+	lbl_disp.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	v3.add_child(lbl_disp)
+	v3.add_child(disp)
+	
+	v3.add_child(HSeparator.new())
+	
+	# Renderer Section (Moved here)
+	var lbl_rend = Label.new()
+	lbl_rend.text = "Debug View"
+	lbl_rend.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	v3.add_child(lbl_rend)
+	v3.add_child(rend)
+	
+	# --- Bottom Buttons Area ---
+	var btn_margin = MarginContainer.new()
+	btn_margin.add_theme_constant_override("margin_left", 10)
+	btn_margin.add_theme_constant_override("margin_right", 10)
+	btn_margin.add_theme_constant_override("margin_bottom", 10)
+	main_v.add_child(btn_margin)
+	
+	if btns:
+		btn_margin.add_child(btns)
+		# Ensure buttons are visible
+		btns.visible = true
+	else:
+		# Text fallback if buttons node is missing
+		var h_btns = HBoxContainer.new()
+		h_btns.add_theme_constant_override("separation", 20)
+		btn_margin.add_child(h_btns)
+		
+		var b_gen = Button.new()
+		b_gen.text = "GENERATE (R)"
+		b_gen.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		b_gen.pressed.connect(func(): _sidebar.get_node("/root/Main").generate()) # Hakky direct call or signal?
+		# Safer: emit signal
+		b_gen.pressed.connect(func(): generate_pressed.emit())
+		h_btns.add_child(b_gen)
+		
+		var b_exit = Button.new()
+		b_exit.text = "EXIT"
+		b_exit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		b_exit.pressed.connect(func(): exit_pressed.emit())
+		h_btns.add_child(b_exit)
 
 func _populate_directions():
 	_enter_dir_box.clear()

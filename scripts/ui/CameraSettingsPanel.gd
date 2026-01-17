@@ -21,42 +21,62 @@ func _ready():
 	name = "CameraSettingsPanel"
 	visible = false
 	
+	# Center it - Wider
 	set_anchors_preset(Control.PRESET_CENTER)
-	offset_left = -150.0
-	offset_top = -150.0
-	offset_right = 150.0
-	offset_bottom = 150.0
+	var w = 600
+	var h = 300
+	offset_left = -w / 2
+	offset_right = w / 2
+	offset_top = -h / 2
+	offset_bottom = h / 2
 	grow_horizontal = Control.GROW_DIRECTION_BOTH
 	grow_vertical = Control.GROW_DIRECTION_BOTH
 	
+	# Margin
+	var margin = MarginContainer.new()
+	margin.set_anchors_preset(Control.PRESET_FULL_RECT)
+	margin.add_theme_constant_override("margin_left", 20)
+	margin.add_theme_constant_override("margin_right", 20)
+	margin.add_theme_constant_override("margin_top", 20)
+	margin.add_theme_constant_override("margin_bottom", 20)
+	add_child(margin)
+	
+	# Make opaque
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.15, 0.15, 0.15, 0.98)
+	add_theme_stylebox_override("panel", style)
+	
 	var vbox = VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 12)
-	add_child(vbox)
+	vbox.add_theme_constant_override("separation", 15)
+	margin.add_child(vbox)
 	
 	var title = Label.new()
 	title.text = "Camera Settings (P)"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 18)
 	vbox.add_child(title)
 	
+	vbox.add_child(HSeparator.new())
+	
+	# Grid
+	var grid = GridContainer.new()
+	grid.columns = 2
+	grid.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	grid.add_theme_constant_override("h_separation", 30)
+	grid.add_theme_constant_override("v_separation", 20)
+	vbox.add_child(grid)
+	
 	# Mode
-	var mode_hbox = HBoxContainer.new()
-	vbox.add_child(mode_hbox)
-	var mode_lbl = Label.new()
-	mode_lbl.text = "Mode:"
-	mode_hbox.add_child(mode_lbl)
 	_mode_button = OptionButton.new()
 	_mode_button.add_item("Static", 0)
 	_mode_button.add_item("Follow", 1)
 	_mode_button.select(0)
 	_mode_button.item_selected.connect(func(idx): mode_changed.emit(idx))
-	mode_hbox.add_child(_mode_button)
+	_create_setting_box_simple(grid, "Mode:", _mode_button)
 	
 	# Zoom
-	var v_zoom = VBoxContainer.new()
-	vbox.add_child(v_zoom)
 	_zoom_label = Label.new()
 	_zoom_label.text = "Zoom: 1.5x"
-	v_zoom.add_child(_zoom_label)
 	_zoom_slider = HSlider.new()
 	_zoom_slider.min_value = 0.5
 	_zoom_slider.max_value = 5.0
@@ -66,14 +86,11 @@ func _ready():
 		_zoom_label.text = "Zoom: %.1fx" % v
 		zoom_changed.emit(v)
 	)
-	v_zoom.add_child(_zoom_slider)
+	_create_setting_box_custom(grid, _zoom_label, _zoom_slider)
 	
 	# Smoothness
-	var v_smooth = VBoxContainer.new()
-	vbox.add_child(v_smooth)
 	_smoothness_label = Label.new()
 	_smoothness_label.text = "Smoothness: 10%"
-	v_smooth.add_child(_smoothness_label)
 	_smoothness_slider = HSlider.new()
 	_smoothness_slider.min_value = 1.0
 	_smoothness_slider.max_value = 100.0
@@ -83,14 +100,11 @@ func _ready():
 		_smoothness_label.text = "Smoothness: %d%%" % int(v)
 		smoothness_changed.emit(v)
 	)
-	v_smooth.add_child(_smoothness_slider)
+	_create_setting_box_custom(grid, _smoothness_label, _smoothness_slider)
 	
 	# Dead Zone
-	var v_dead = VBoxContainer.new()
-	vbox.add_child(v_dead)
 	_dead_zone_label = Label.new()
 	_dead_zone_label.text = "Dead Zone: 10%"
-	v_dead.add_child(_dead_zone_label)
 	_dead_zone_slider = HSlider.new()
 	_dead_zone_slider.min_value = 0.0
 	_dead_zone_slider.max_value = 50.0
@@ -100,14 +114,11 @@ func _ready():
 		_dead_zone_label.text = "Dead Zone: %d%%" % int(v)
 		dead_zone_changed.emit(v)
 	)
-	v_dead.add_child(_dead_zone_slider)
+	_create_setting_box_custom(grid, _dead_zone_label, _dead_zone_slider)
 	
 	# Parallax
-	var v_par = VBoxContainer.new()
-	vbox.add_child(v_par)
 	_parallax_label = Label.new()
 	_parallax_label.text = "Grid Parallax: 0%"
-	v_par.add_child(_parallax_label)
 	_parallax_slider = HSlider.new()
 	_parallax_slider.min_value = 0.0
 	_parallax_slider.max_value = 100.0
@@ -117,12 +128,35 @@ func _ready():
 		_parallax_label.text = "Grid Parallax: %d%%" % int(v)
 		parallax_changed.emit(v)
 	)
-	v_par.add_child(_parallax_slider)
+	_create_setting_box_custom(grid, _parallax_label, _parallax_slider)
+	
+	# Spacer
+	var spacer = Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	vbox.add_child(spacer)
 	
 	var btn_close = Button.new()
 	btn_close.text = "Close (P)"
 	btn_close.pressed.connect(func(): close_requested.emit())
 	vbox.add_child(btn_close)
+
+func _create_setting_box_simple(parent, label_text, control):
+	var box = VBoxContainer.new()
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	parent.add_child(box)
+	var lbl = Label.new()
+	lbl.text = label_text
+	box.add_child(lbl)
+	control.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	box.add_child(control)
+
+func _create_setting_box_custom(parent, label_node, control):
+	var box = VBoxContainer.new()
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	parent.add_child(box)
+	box.add_child(label_node)
+	control.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	box.add_child(control)
 
 func set_values(mode_idx, zoom, smoothness, dead_zone, parallax):
 	_mode_button.select(mode_idx)
