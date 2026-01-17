@@ -72,8 +72,6 @@ func _ready():
 	_setup_sidebar_signals()
 	
 	_setup_resolution_options()
-	# FPS is now locked to 60
-	Engine.max_fps = 60
 	
 	_setup_camera_panel()
 	setup_ui_defaults()
@@ -206,20 +204,6 @@ func _apply_enemy_physics_settings(enemy: Enemy):
 	enemy.ceiling_crash_duration = 0.1
 
 
-func _setup_fps_options():
-	var options = [
-		{"label": "Unlimited", "value": 0},
-		{"label": "30 FPS", "value": 30},
-		{"label": "60 FPS", "value": 60},
-		{"label": "120 FPS", "value": 120},
-		{"label": "144 FPS", "value": 144},
-		{"label": "240 FPS", "value": 240}
-	]
-	
-	if _sidebar_panel:
-		_sidebar_panel.populate_fps_options(options)
-
-
 func _setup_camera_panel():
 	if $CanvasLayer.has_node("CameraSettingsPanel"):
 		$CanvasLayer.get_node("CameraSettingsPanel").queue_free()
@@ -249,7 +233,6 @@ func _setup_camera_panel():
 func _setup_sidebar_signals():
 	_sidebar_panel.resolution_changed.connect(_on_resolution_changed)
 	_sidebar_panel.fullscreen_toggled.connect(_on_fullscreen_toggled)
-	_sidebar_panel.fps_selected.connect(_on_fps_selected)
 	
 	_sidebar_panel.grid_render_toggled.connect(_on_grid_check_toggled)
 	_sidebar_panel.spawn_render_toggled.connect(_on_spawn_check_toggled)
@@ -268,13 +251,12 @@ func setup_ui_defaults():
 	renderer.set_spawn_enabled(false)
 	renderer.set_debug_enabled(false)
 	renderer.set_path_enabled(true)
-	
 	# STRICT 60 FPS LOCK (User Request)
-	# Disable VSync to prevent monitor rate interference
+	# This is the single source of truth for rendering and physics rate.
+	# VSync is disabled to ensure consistent timing.
+	# DO NOT CHANGE THESE VALUES or load them from settings.
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
-	# Lock rendering to 60 FPS
 	Engine.max_fps = 60
-	# Lock physics ticks to 60 (default, but explicit)
 	Engine.physics_ticks_per_second = 60
 
 
@@ -339,12 +321,6 @@ func _on_fullscreen_toggled(toggled_on: bool):
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		_center_window()
-
-
-func _on_fps_selected(index: int):
-	if not _sidebar_panel: return
-	var value = _sidebar_panel.get_fps_option_value(index)
-	Engine.max_fps = value
 
 
 func generate():

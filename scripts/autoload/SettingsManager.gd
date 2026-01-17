@@ -54,7 +54,6 @@ func save_settings(data: Dictionary) -> void:
 		var disp = data["display"]
 		config.set_value("display", "resolution_index", disp.get("resolution_index", 0))
 		config.set_value("display", "fullscreen", disp.get("fullscreen", false))
-		config.set_value("display", "fps_limit", disp.get("fps_limit", 0))
 	
 	# Camera settings
 	if data.has("camera"):
@@ -162,7 +161,6 @@ func load_settings() -> Dictionary:
 	data["display"] = {
 		"resolution_index": config.get_value("display", "resolution_index", -1),
 		"fullscreen": config.get_value("display", "fullscreen", false),
-		"fps_limit": config.get_value("display", "fps_limit", 0),
 	}
 	
 	# Camera settings

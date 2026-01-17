@@ -4,8 +4,8 @@ extends RefCounted
 
 signal resolution_changed(index: int)
 signal fullscreen_toggled(enabled: bool)
-signal fps_selected(index: int)
 signal grid_render_toggled(enabled: bool)
+
 signal spawn_render_toggled(enabled: bool)
 signal strategies_render_toggled(enabled: bool)
 signal path_render_toggled(enabled: bool)
@@ -47,7 +47,7 @@ var _path_check: CheckBox
 # Display
 var _resolution_option: OptionButton
 var _fullscreen_check: CheckBox
-var _fps_option: OptionButton
+
 
 func _init(sidebar_node: Control):
 	_sidebar = sidebar_node
@@ -231,15 +231,12 @@ func _setup_references():
 	# Display
 	_resolution_option = vbox.get_node("Display/Resolution/OptionButton")
 	_fullscreen_check = vbox.get_node("Display/Fullscreen")
-	_fps_option = vbox.get_node("Display/FPS/OptionButton")
-	# Hide FPS option since we locked it
-	_fps_option.get_parent().visible = false
+	# FPS Option removed as requested
 
 func _connect_signals():
 	# Display signals
 	_resolution_option.item_selected.connect(func(idx): resolution_changed.emit(idx))
 	_fullscreen_check.toggled.connect(func(on): fullscreen_toggled.emit(on))
-	_fps_option.item_selected.connect(func(idx): fps_selected.emit(idx))
 	
 	# Renderer signals
 	_grid_render_check.toggled.connect(func(on): grid_render_toggled.emit(on))
@@ -381,23 +378,6 @@ func populate_directions(keys: Array):
 	# Defaults (Select by index, Main.gd used int constants 0..3)
 	# Default Right (0?), Down (2?) - need to check Types in Main.gd
 
-func get_fps_option_value(index: int) -> int:
-	if index < 0 or index >= _fps_option.item_count: return 0
-	return _fps_option.get_item_id(index)
-
-func set_resolution_index(index: int):
-	if index >= 0 and index < _resolution_option.item_count:
-		_resolution_option.select(index)
-
-func get_resolution_count() -> int:
-	return _resolution_option.item_count
-
-func set_fps_index(index: int):
-	if index >= 0 and index < _fps_option.item_count:
-		_fps_option.select(index)
-
-func get_fps_count() -> int:
-	return _fps_option.item_count
 
 func set_fullscreen_checked(checked: bool):
 	_fullscreen_check.button_pressed = checked
